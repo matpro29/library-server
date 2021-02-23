@@ -1,8 +1,8 @@
 package matpro29.library.Controller;
 
-
 import com.google.gson.Gson;
-import matpro29.library.Entity.Search;
+import matpro29.library.Entity.Find;
+import matpro29.library.Entity.Title;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -18,23 +18,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-
-
 @RestController
-public class ItemController {
+@RequestMapping("/title")
+public class TitleController {
 
-    @RequestMapping("/item/search")
+    private String TITLE_API = "https://imdb8.p.rapidapi.com/title";
+
+    @RequestMapping("/find")
     @CrossOrigin(origins = "http://localhost:4200")
-    public Search search() throws IOException, URISyntaxException {
+    public Find find(@RequestBody Title title) throws IOException, URISyntaxException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String result = "";
 
-        URIBuilder builder = new URIBuilder("http://www.omdbapi.com/");
-        builder.setParameter("s", "Batman");
-        builder.setParameter("apikey", "dfb6eb94");
+        URIBuilder builder = new URIBuilder(TITLE_API + "/find");
+        builder.setParameter("q", title.getTitle());
 
         try {
             HttpGet request = new HttpGet(builder.build());
+            request.setHeader("x-rapidapi-key", "1a20dde199msh186c5b1565aae85p1f3b51jsnc48629c58339");
+            request.setHeader("x-rapidapi-host", "imdb8.p.rapidapi.com");
             CloseableHttpResponse response = httpClient.execute(request);
 
             try {
@@ -58,6 +60,6 @@ public class ItemController {
         }
 
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
-        return gson.fromJson(result, Search.class);
+        return gson.fromJson(result, Find.class);
     }
 }
