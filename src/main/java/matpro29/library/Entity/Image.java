@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Image {
-    private String height;
     private String id;
     private String url;
-    private String width;
+    private Integer height;
+    private Integer width;
 }

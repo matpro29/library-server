@@ -2,8 +2,10 @@ package matpro29.library.Entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Find {
-    private Title[] results;
-    private String[] types;
+    private List<Person> persons;
+    private List<Title> titles;
 }

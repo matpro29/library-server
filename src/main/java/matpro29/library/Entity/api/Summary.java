@@ -1,4 +1,4 @@
-package matpro29.library.Entity;
+package matpro29.library.Entity.api;
 
 import lombok.Data;
 

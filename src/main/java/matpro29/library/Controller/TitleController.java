@@ -2,7 +2,9 @@ package matpro29.library.Controller;
 
 import com.google.gson.Gson;
 import matpro29.library.Entity.Find;
-import matpro29.library.Entity.Title;
+import matpro29.library.Entity.api.FindTitle;
+import matpro29.library.Entity.api.Result;
+import matpro29.library.Mapper.FindMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -10,6 +12,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +25,14 @@ import java.net.URISyntaxException;
 @RequestMapping("/title")
 public class TitleController {
 
+    @Autowired
+    private FindMapper findMapper;
+
     private String TITLE_API = "https://imdb8.p.rapidapi.com/title";
 
     @RequestMapping("/find")
     @CrossOrigin(origins = "http://localhost:4200")
-    public Find find(@RequestBody Title title) throws IOException, URISyntaxException {
+    public Find find(@RequestBody Result title) throws IOException, URISyntaxException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String result = "";
 
@@ -60,7 +66,6 @@ public class TitleController {
         }
 
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
-        Find find = gson.fromJson(result, Find.class);
-        return find;
+        return findMapper.findMapper(gson.fromJson(result, FindTitle.class).getResults());
     }
 }
