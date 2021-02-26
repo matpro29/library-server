@@ -60,6 +60,7 @@ public class TitleController {
         }
 
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
-        return gson.fromJson(result, Find.class);
+        Find find = gson.fromJson(result, Find.class);
+        return find;
     }
 }

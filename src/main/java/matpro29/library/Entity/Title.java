@@ -2,6 +2,8 @@ package matpro29.library.Entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Title {
     private String id;
@@ -14,4 +16,9 @@ public class Title {
     private String title;
     private String titleType;
     private String year;
+    private List<Principal> principals;
+
+    private String legacyNameText;
+    private String name;
+    private KnowFor[] knownFor;
 }
