@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class Result {
+//    base title
     private String id;
     private Image image;
     private String runningTimeInMinutes;
@@ -19,7 +20,12 @@ public class Result {
     private String year;
     private List<Principal> principals;
 
+//    actor
     private String legacyNameText;
     private String name;
     private KnowFor[] knownFor;
+
+//    episode
+    private String episode;
+    private String season;
 }

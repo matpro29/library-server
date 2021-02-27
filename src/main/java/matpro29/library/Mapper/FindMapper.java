@@ -2,12 +2,17 @@ package matpro29.library.Mapper;
 
 import matpro29.library.Entity.Find;
 import matpro29.library.Entity.Person;
+import matpro29.library.Entity.Season;
 import matpro29.library.Entity.Title;
+import matpro29.library.Entity.api.ApiSeason;
 import matpro29.library.Entity.api.Result;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class FindMapper {
@@ -47,5 +52,25 @@ public class FindMapper {
         title.setImage(result.getImage());
 
         return title;
+    }
+
+    public List<Season> seasonsMapper(List<ApiSeason> apiSeasons, Map<Integer, Season> addedSeasonMap, String titleId) {
+        List<Season> seasons = new ArrayList<>();
+
+        for(ApiSeason apiSeason : apiSeasons) {
+            Season season = new Season();
+            season.setSeason(apiSeason.getSeason());
+            season.setEpisodes(apiSeason.getEpisodes().size());
+            season.setTitleId(titleId);
+
+            Season addedSeason = addedSeasonMap.get(apiSeason.getSeason());
+            if (addedSeason != null) {
+                season.setSeasonId(addedSeason.getSeasonId());
+            }
+
+            seasons.add(season);
+        }
+
+        return seasons;
     }
 }
